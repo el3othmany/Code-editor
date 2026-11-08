@@ -1,0 +1,1113 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="path/to/your/icon.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OTHMAN STUDIO | Game Devlogs & Community</title>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- RESET & GLOBAL ---------- */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background-color: #080808;
+      color: #e0e0e0;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      background-image: 
+        linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+      background-size: 100% 4px, 6px 100%;
+    }
+    html { scroll-behavior: smooth; }
+    ::selection { background: #8b0000; color: #fff; }
+
+    h1, h2, h3, .logo, .nav-links a, .btn, .badge { font-family: 'Space Grotesk', sans-serif; font-weight: 600; letter-spacing: -0.01em; }
+    h1 { font-size: clamp(2.5rem, 6vw, 4rem); line-height: 1.1; text-transform: uppercase; }
+    h2 { font-size: clamp(1.8rem, 5vw, 2.5rem); margin-bottom: 1.2rem; border-left: 4px solid #cc0000; padding-left: 15px; }
+    h3 { font-size: 1.3rem; font-weight: 600; color: #fff; }
+    .accent-red { color: #ff3333; }
+    .accent-green { color: #00ff41; font-family: 'Courier Prime', monospace; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+
+    /* ---------- BUTTONS ---------- */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+      padding: 0.8rem 1.8rem; border-radius: 4px; text-decoration: none;
+      font-weight: 600; font-size: 0.95rem; transition: all 0.3s; 
+      border: 1px solid #333; cursor: pointer; background: transparent; color: white;
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+    .btn-primary { background: #8b0000; border: 1px solid #cc0000; box-shadow: 0 0 15px rgba(139, 0, 0, 0.4); }
+    .btn-primary:hover { background: #cc0000; box-shadow: 0 0 25px rgba(255, 0, 0, 0.6); transform: translateY(-2px); }
+    .btn-outline { border: 1px solid #444; background: rgba(255, 255, 255, 0.02); }
+    .btn-outline:hover { border-color: #888; background: rgba(255, 255, 255, 0.05); transform: translateY(-2px); }
+    .btn-danger { background: #b91c1c; border-color: #b91c1c; }
+    .btn-danger:hover { background: #dc2626; border-color: #dc2626; }
+    .btn-small { padding: 0.4rem 1rem; font-size: 0.75rem; border: 1px solid #444; border-radius: 2px; color: #ccc; text-transform: uppercase; }
+
+    /* ---------- HEADER ---------- */
+    header {
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+      background: rgba(8, 8, 8, 0.85); backdrop-filter: blur(10px);
+      border-bottom: 1px solid #222; transition: all 0.3s;
+    }
+    .nav-container { display: flex; align-items: center; justify-content: space-between; height: 70px; padding: 0 2rem; max-width: 1400px; margin: 0 auto; }
+    .logo { font-size: 1.4rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; color: #fff; text-decoration: none; }
+    .logo i { color: #cc0000; }
+    .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+    .nav-links a { color: #999; text-decoration: none; font-weight: 500; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: #ff3333; }
+    
+    .lang-toggle { display: flex; gap: 0.5rem; align-items: center; font-size: 0.85rem; background: #111; padding: 0.3rem; border-radius: 4px; border: 1px solid #333; }
+    .lang-toggle button { background: #222; border: none; color: #aaa; padding: 0.3rem 0.8rem; border-radius: 2px; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 0.8rem; }
+    .lang-toggle button.active { background: #8b0000; color: #fff; }
+    .mobile-menu-btn { display: none; background: none; border: none; color: white; font-size: 1.8rem; cursor: pointer; }
+
+    /* User avatar in nav */
+    .user-nav-profile {
+      display: flex; align-items: center; gap: 0.5rem; cursor: pointer; text-decoration: none; color: white;
+      padding: 0.3rem 0.8rem; border-radius: 30px; border: 1px solid #333; transition: 0.2s;
+    }
+    .user-nav-profile:hover { background: #111; border-color: #ff3333; }
+    .user-nav-profile img { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; border: 1px solid #444; }
+    .user-nav-profile span { font-size: 0.85rem; font-weight: 600; }
+
+    /* ---------- PAGE VIEWS ---------- */
+    .page-view { display: none; padding-top: 100px; padding-bottom: 4rem; min-height: 100vh; }
+    .page-view.active { display: block; animation: fadeIn 0.4s ease-in-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ---------- HERO ---------- */
+    .hero-content { display: flex; align-items: center; justify-content: space-between; gap: 3rem; }
+    .hero-text { flex: 1; max-width: 650px; }
+    .hero p { font-size: 1.1rem; color: #888; margin-bottom: 2rem; font-family: 'Courier Prime', monospace; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: #111; border: 1px solid #333; padding: 0.4rem 1rem; font-size: 0.8rem; color: #aaa; text-transform: uppercase; margin-bottom: 1.5rem; }
+    .hero-badge i { color: #ff3333; animation: blink 2s infinite; }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    
+    .camera-feed { width: 100%; max-width: 400px; background: #050505; border: 4px solid #1a1a1a; border-radius: 8px; padding: 10px; box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
+    .cam-screen { background: #111; height: 220px; border-radius: 4px; display: flex; flex-direction: column; justify-content: center; align-items: center; border: 1px solid #222; position: relative; overflow: hidden; }
+    .cam-screen img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; filter: sepia(1) hue-rotate(-50deg) saturate(2); }
+    .cam-text { position: absolute; top: 10px; left: 15px; color: #ff3333; font-family: 'Courier Prime', monospace; font-weight: bold; font-size: 0.9rem; z-index: 2; }
+    .cam-time { position: absolute; top: 10px; right: 15px; color: #00ff41; font-family: 'Courier Prime', monospace; font-size: 0.9rem; z-index: 2; }
+    .cam-rec { position: absolute; bottom: 10px; left: 15px; display: flex; align-items: center; gap: 5px; color: #ff3333; font-family: 'Courier Prime', monospace; font-size: 0.8rem; z-index: 2; }
+    .rec-dot { width: 8px; height: 8px; background: #ff0000; border-radius: 50%; animation: blink 1s infinite; }
+
+    /* ---------- CARDS GRID ---------- */
+    .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; margin: 2rem 0; }
+    .game-card { background: #0d0d0d; border-radius: 8px; overflow: hidden; border: 1px solid #222; transition: 0.3s; position: relative; display: flex; flex-direction: column; }
+    .game-card:hover { border-color: #8b0000; box-shadow: 0 0 20px rgba(139, 0, 0, 0.2); transform: translateY(-5px); }
+    .game-cover { height: 180px; background: #080808; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: #333; border-bottom: 1px solid #1a1a1a; position: relative; overflow: hidden; }
+    .game-cover img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
+    .game-info { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
+    .game-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0.8rem 0; }
+    .game-tags span { background: #1a1a1a; color: #888; font-size: 0.7rem; padding: 0.2rem 0.6rem; border: 1px solid #333; font-family: 'Courier Prime', monospace; }
+    .game-desc { color: #777; font-size: 0.9rem; margin-bottom: 1rem; flex-grow: 1; }
+    
+    /* Author Info */
+    .post-author { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
+    .post-author img { width: 24px; height: 24px; border-radius: 50%; border: 1px solid #333; }
+    .post-author span { font-size: 0.8rem; color: #888; }
+
+    /* Reactions */
+    .reactions { display: flex; gap: 0.5rem; margin-top: 1rem; border-top: 1px solid #222; padding-top: 1rem; }
+    .reaction-btn { 
+      background: #1a1a1a; border: 1px solid #333; color: #aaa; padding: 0.3rem 0.8rem; 
+      border-radius: 30px; font-size: 0.8rem; cursor: pointer; transition: 0.2s;
+      display: flex; align-items: center; gap: 0.3rem;
+    }
+    .reaction-btn:hover { background: #222; border-color: #555; color: #fff; }
+    .reaction-btn.active { background: #8b0000; border-color: #cc0000; color: #fff; }
+    .reaction-btn i { width: 14px; height: 14px; }
+
+    .card-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; border-top: 1px solid #222; padding-top: 1rem; gap: 0.5rem; }
+    .card-actions button { flex: 1; text-align: center; justify-content: center; }
+
+    /* ---------- ADMIN FORM ---------- */
+    .admin-panel { background: #0d0d0d; border: 1px solid #333; padding: 2rem; border-radius: 8px; max-width: 800px; margin: 0 auto; }
+    .form-group { margin-bottom: 1.5rem; }
+    .form-group label { display: block; margin-bottom: 0.5rem; color: #aaa; font-family: 'Courier Prime', monospace; font-size: 0.9rem; }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%; padding: 0.8rem; background: #111; border: 1px solid #333; color: #fff;
+      font-family: 'Inter', sans-serif; border-radius: 4px; font-size: 1rem;
+    }
+    .form-group input:focus, .form-group textarea:focus { border-color: #cc0000; outline: none; }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .empty-state { text-align: center; padding: 4rem; color: #555; font-family: 'Courier Prime', monospace; grid-column: 1 / -1; border: 1px dashed #333; border-radius: 8px; }
+
+    /* ---------- MODALS ---------- */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.9); z-index: 2000;
+      display: none; align-items: center; justify-content: center; overflow-y: auto; padding: 20px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-content { background: #111; border: 1px solid #333; padding: 2rem; border-radius: 8px; width: 100%; max-width: 420px; position: relative; }
+    .modal-content h3 { margin-bottom: 1rem; color: #ff3333; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+    .modal-close { position: absolute; top: 15px; right: 15px; background: none; border: none; color: #666; cursor: pointer; }
+    .modal-close:hover { color: #fff; }
+
+    /* Profile Page Specific */
+    .profile-header { display: flex; align-items: center; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap; }
+    .profile-avatar { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #8b0000; object-fit: cover; background: #222; }
+    .profile-info h2 { border: none; padding: 0; margin: 0; }
+    .profile-info p { color: #888; font-family: 'Courier Prime', monospace; font-size: 0.9rem; }
+
+    /* ---------- FOOTER ---------- */
+    footer { border-top: 1px solid #222; padding: 2rem 0; background: #050505; margin-top: 4rem; }
+    .footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-logo { font-size: 1.2rem; font-weight: 700; color: #fff; }
+    .copyright { color: #444; font-size: 0.8rem; font-family: 'Courier Prime', monospace; }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 900px) {
+      .hero-content { flex-direction: column; text-align: center; }
+      .hero-text { margin: 0 auto; }
+      .camera-feed { display: none; }
+      .nav-links { display: none; }
+      .mobile-menu-btn { display: block; }
+      .form-row { grid-template-columns: 1fr; }
+      .user-nav-profile span { display: none; } /* Hide username on mobile */
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="nav-container">
+    <a href="#home" class="logo" onclick="navigateTo('home')">
+      <i data-lucide="terminal"></i> OTHMAN<span style="color:#555">STUDIO</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#public" onclick="navigateTo('public')" id="nav-public">Devlogs</a>
+      <a href="#about" onclick="navigateTo('about')" id="nav-about">About</a>
+      <a href="#contact" onclick="openContact()" id="nav-contact">Contact</a>
+      <!-- Admin Link Only Visible if Admin -->
+      <a href="#admin" onclick="navigateTo('admin')" id="nav-admin" style="display: none; color: #00ff41;"><i data-lucide="shield" style="width: 14px; height: 14px; vertical-align: middle;"></i> Admin</a>
+    </nav>
+    
+    <div style="display: flex; gap: 1rem; align-items: center;">
+      <div class="lang-toggle">
+        <button class="active" onclick="setLanguage('en')" id="btn-en">EN</button>
+        <button onclick="setLanguage('ar')" id="btn-ar">AR</button>
+      </div>
+      
+      <!-- User Profile / Auth Buttons -->
+      <div id="auth-buttons">
+        <button class="btn btn-outline" onclick="openLogin()" style="padding: 0.4rem 1rem; font-size: 0.8rem;">Login</button>
+      </div>
+      
+      <div id="user-profile-nav" style="display: none;">
+        <a href="#profile" class="user-nav-profile" onclick="navigateTo('profile')">
+          <img id="nav-avatar" src="https://ui-avatars.com/api/?name=User&background=8b0000&color=fff" alt="User">
+          <span id="nav-username">User</span>
+        </a>
+      </div>
+
+      <button class="mobile-menu-btn" onclick="alert('Use the links above on mobile')"><i data-lucide="menu"></i></button>
+    </div>
+  </div>
+</header>
+
+<!-- ================= PAGE: HOME ================= -->
+<div id="page-home" class="page-view active">
+  <div class="container hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <div class="hero-badge">
+          <i data-lucide="radio" style="width: 16px; height: 16px;"></i>
+          <span data-i18n="heroBadge">System Status: Online</span>
+        </div>
+        <h1><span class="accent-red">OTHMAN</span><br>STUDIO</h1>
+        <p data-i18n="heroDesc">> Initializing personal publishing platform...<br>> Documenting the process of creating original games. Explore the development logs, mechanics, and lore behind the worlds I build.</p>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+          <button class="btn btn-primary" onclick="navigateTo('public')">
+            <i data-lucide="folder-open" style="width: 18px;"></i> <span data-i18n="btnReadLogs">Read Devlogs</span>
+          </button>
+          <button class="btn btn-outline" onclick="openRegister()">
+            <i data-lucide="user-plus" style="width: 18px;"></i> <span data-i18n="btnJoin">Join Community</span>
+          </button>
+        </div>
+      </div>
+      <div class="camera-feed">
+        <div class="cam-screen">
+          <div class="cam-text">CAM 01 <span style="color:#fff">●</span> REC</div>
+          <div class="cam-time">12:20 م | ليلة 1/3</div>
+          <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=600&auto=format&fit=crop" alt="Game Atmosphere">
+          <div class="cam-rec"><div class="rec-dot"></div> CAM-5</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= PAGE: PUBLIC (VIEW & REACT) ================= -->
+<div id="page-public" class="page-view">
+  <div class="container">
+    <div style="margin-bottom: 2rem;">
+      <span class="accent-green">// PUBLIC_ARCHIVE: DEVELOPMENT_LOGS</span>
+      <h2 data-i18n="publicTitle">My Original Works</h2>
+    </div>
+    <div id="public-grid" class="games-grid">
+      <!-- Public posts injected here -->
+    </div>
+  </div>
+</div>
+
+<!-- ================= PAGE: PROFILE ================= -->
+<div id="page-profile" class="page-view">
+  <div class="container">
+    <div class="profile-header">
+      <img id="profile-avatar-display" class="profile-avatar" src="" alt="Avatar">
+      <div class="profile-info">
+        <h2 id="profile-username-display">Username</h2>
+        <p id="profile-role-display" style="color: #ff3333;">Role: User</p>
+      </div>
+    </div>
+    
+    <div class="admin-panel" style="max-width: 100%;">
+      <h3 style="margin-bottom: 1rem;">Account Settings</h3>
+      <div class="form-group">
+        <label>Change Avatar (URL)</label>
+        <div style="display: flex; gap: 1rem;">
+          <input type="url" id="new-avatar-url" placeholder="https://example.com/image.jpg">
+          <button class="btn btn-primary" onclick="updateAvatar()">Update</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Change Password</label>
+        <div style="display: flex; gap: 1rem;">
+          <input type="password" id="new-password" placeholder="New password">
+          <button class="btn btn-outline" onclick="updatePassword()">Change</button>
+        </div>
+      </div>
+      <button class="btn btn-danger" onclick="logout()" style="margin-top: 1rem;">Logout</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= PAGE: ADMIN (DASHBOARD) ================= -->
+<div id="page-admin" class="page-view">
+  <div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <span class="accent-red">// ADMIN_DASHBOARD</span>
+        <h2 data-i18n="adminTitle">Manage Devlogs</h2>
+      </div>
+      <button class="btn btn-primary" onclick="resetForm()">
+        <i data-lucide="plus" style="width: 18px;"></i> <span data-i18n="btnNewPost">New Post</span>
+      </button>
+    </div>
+
+    <!-- Form (Hidden by default, shown when adding/editing) -->
+    <div id="form-container" style="display: none; margin-bottom: 3rem;">
+      <div class="admin-panel">
+        <h3 id="form-title" style="margin-bottom: 1.5rem;">Create New Devlog</h3>
+        <form id="post-form">
+          <input type="hidden" id="post-id" value="">
+          <div class="form-group">
+            <label data-i18n="lblTitle">Post Title *</label>
+            <input type="text" id="post-title" required placeholder="e.g. The Midnight Clinic">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label data-i18n="lblTags">Tags (comma separated) *</label>
+              <input type="text" id="post-tags" required placeholder="e.g. Horror, Puzzle, 3D">
+            </div>
+            <div class="form-group">
+              <label data-i18n="lblStatus">Status *</label>
+              <select id="post-status">
+                <option value="IN_DEV">In Development</option>
+                <option value="COMPLETED">Completed</option>
+                <option value="PLANNING">Planning</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label data-i18n="lblImage">Image URL (Optional)</label>
+            <input type="url" id="post-image" placeholder="https://example.com/image.jpg">
+          </div>
+          <div class="form-group">
+            <label data-i18n="lblDesc">Description *</label>
+            <textarea id="post-desc" required placeholder="Write your devlog content here..."></textarea>
+          </div>
+          <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+            <button type="submit" class="btn btn-primary">
+              <i data-lucide="save" style="width: 18px;"></i> <span data-i18n="btnSave">Save Post</span>
+            </button>
+            <button type="button" class="btn btn-outline" onclick="hideForm()">
+              <span data-i18n="btnCancel">Cancel</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Admin List -->
+    <div id="admin-grid" class="games-grid">
+      <!-- Admin posts injected here -->
+    </div>
+
+    <!-- Manage Users (Only for Admin) -->
+    <div style="margin-top: 4rem;">
+      <h3 style="color: #ff3333; margin-bottom: 1rem;">User Management</h3>
+      <div id="user-management-list" class="admin-panel" style="max-width: 100%;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= PAGE: ABOUT ================= -->
+<div id="page-about" class="page-view">
+  <div class="container">
+    <h2 data-i18n="aboutTitle">About The Creator</h2>
+    <div style="display: flex; gap: 4rem; flex-wrap: wrap; margin-top: 2rem;">
+      <div style="flex:1; min-width: 300px;">
+        <p style="color: #888; font-family: 'Courier Prime', monospace; margin-bottom: 1rem;" data-i18n="aboutP1">
+          I am a solo game developer and the founder of OTHMAN STUDIO...
+        </p>
+        <p style="color: #888; font-family: 'Courier Prime', monospace;" data-i18n="aboutP2">
+          No publishers, no marketing fluff. Just raw development logs...
+        </p>
+        <div style="background: #0d0d0d; border: 1px solid #333; padding: 1.5rem; margin-top: 2rem;">
+          <div style="display: flex; gap: 10px; color: #ccc; font-family: 'Courier Prime', monospace; font-size: 0.9rem; margin-bottom: 0.5rem;"><span style="color:#00ff41">root@othman:~$</span> <span>status --current</span></div>
+          <div style="display: flex; gap: 10px; color: #ccc; font-family: 'Courier Prime', monospace; font-size: 0.9rem; margin-bottom: 0.5rem;"><span>></span> <span>Working on: "The Midnight Clinic"</span></div>
+          <div style="display: flex; gap: 10px; color: #ccc; font-family: 'Courier Prime', monospace; font-size: 0.9rem;"><span>></span> <span>Engine: Unity / Custom Shaders</span></div>
+        </div>
+      </div>
+      <div style="flex:1; display: flex; justify-content: center; align-items: center; min-width: 300px;">
+        <div style="width: 200px; height: 200px; border-radius: 50%; border: 1px dashed #444; display: flex; align-items: center; justify-content: center; color: #333;">
+          <i data-lucide="cpu" style="width: 80px; height: 80px;"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MODALS ================= -->
+
+<!-- Login Modal -->
+<div id="login-modal" class="modal-overlay">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal('login-modal')"><i data-lucide="x"></i></button>
+    <h3><i data-lucide="lock" style="width: 20px; vertical-align: middle;"></i> Login</h3>
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" id="login-username" placeholder="Othman_tak">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="login-password" placeholder="••••••••">
+    </div>
+    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+      <button class="btn btn-primary" onclick="login()" style="flex:1;">Login</button>
+    </div>
+    <p style="text-align: center; margin-top: 1rem; font-size: 0.9rem; color: #666;">
+      Don't have an account? <a href="#" onclick="closeModal('login-modal'); openRegister();" style="color: #ff3333;">Register</a>
+    </p>
+    <p id="login-error" style="color: #ff3333; font-size: 0.8rem; margin-top: 1rem; text-align: center; display: none;">Invalid username or password!</p>
+  </div>
+</div>
+
+<!-- Register Modal -->
+<div id="register-modal" class="modal-overlay">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal('register-modal')"><i data-lucide="x"></i></button>
+    <h3><i data-lucide="user-plus" style="width: 20px; vertical-align: middle;"></i> Create Account</h3>
+    <div class="form-group">
+      <label>Username *</label>
+      <input type="text" id="reg-username" placeholder="Othman_tak">
+    </div>
+    <div class="form-group">
+      <label>Password *</label>
+      <input type="password" id="reg-password" placeholder="••••••••">
+    </div>
+    <div class="form-group" style="border: 1px solid #333; padding: 1rem; border-radius: 4px; background: #0a0a0a;">
+      <label style="color: #ff3333;">Admin Code (Optional)</label>
+      <input type="password" id="reg-admin-code" placeholder="Enter code to become admin">
+      <p style="font-size: 0.7rem; color: #666; margin-top: 0.5rem;">Only if you have the secret code.</p>
+    </div>
+    <button class="btn btn-primary" onclick="register()" style="width: 100%; margin-top: 1rem;">Register</button>
+    <p id="reg-error" style="color: #ff3333; font-size: 0.8rem; margin-top: 1rem; text-align: center; display: none;"></p>
+  </div>
+</div>
+
+<!-- Contact Modal -->
+<div id="contact-modal" class="modal-overlay">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal('contact-modal')"><i data-lucide="x"></i></button>
+    <h3><i data-lucide="mail" style="width: 20px; vertical-align: middle;"></i> Contact Me</h3>
+    <div class="form-group">
+      <label>Subject</label>
+      <input type="text" id="contact-subject" placeholder="Game feedback, question...">
+    </div>
+    <div class="form-group">
+      <label>Message</label>
+      <textarea id="contact-message" placeholder="Your message here..."></textarea>
+    </div>
+    <button class="btn btn-primary" onclick="sendContact()" style="width: 100%;">Send Message</button>
+    <p id="contact-success" style="color: #00ff41; font-size: 0.9rem; margin-top: 1rem; text-align: center; display: none;">Message sent successfully!</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-logo"><span style="color:#cc0000">OTHMAN</span> STUDIO</div>
+      <div class="copyright" data-i18n="footerText">© 2025 OTHMAN STUDIO · SYSTEM VER. 3.1.0</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ==========================================
+  // 1. DATA MANAGEMENT (localStorage)
+  // ==========================================
+  const defaultPosts = [
+    {
+      id: '1',
+      title: 'The Midnight Clinic',
+      tags: 'Horror, Puzzle, 3D',
+      status: 'IN_DEV',
+      desc: 'Exploring the mechanics behind the dynamic lighting and the eerie atmosphere of the clinic. How I built the camera system.',
+      image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=600&auto=format&fit=crop',
+      author: 'Othman_tak',
+      authorAvatar: 'https://ui-avatars.com/api/?name=Othman&background=8b0000&color=fff',
+      reactions: { hearts: 0, fires: 0, dislikes: 0 }
+    },
+    {
+      id: '2',
+      title: 'Cipher: 8576',
+      tags: 'Mechanics, UI/UX',
+      status: 'COMPLETED',
+      desc: 'A deep dive into the diegetic UI design. How I created the functional keypad and integrated it with the game\'s puzzle system.',
+      image: '',
+      author: 'Othman_tak',
+      authorAvatar: 'https://ui-avatars.com/api/?name=Othman&background=8b0000&color=fff',
+      reactions: { hearts: 0, fires: 0, dislikes: 0 }
+    }
+  ];
+
+  function getPosts() {
+    const stored = localStorage.getItem('othman_posts');
+    return stored ? JSON.parse(stored) : defaultPosts;
+  }
+
+  function savePosts(posts) {
+    localStorage.setItem('othman_posts', JSON.stringify(posts));
+  }
+
+  // ==========================================
+  // 2. USER & AUTH MANAGEMENT
+  // ==========================================
+  
+  // !!! CHANGE THIS SECRET CODE !!!
+  const MASTER_ADMIN_CODE = 'OTHMAN_SECRET_2025'; 
+
+  function getUsers() {
+    const stored = localStorage.getItem('othman_users');
+    return stored ? JSON.parse(stored) : [];
+  }
+
+  function saveUsers(users) {
+    localStorage.setItem('othman_users', JSON.stringify(users));
+  }
+
+  let currentUser = JSON.parse(localStorage.getItem('othman_current_user')) || null;
+
+  function updateUIForAuth() {
+    const authButtons = document.getElementById('auth-buttons');
+    const userProfileNav = document.getElementById('user-profile-nav');
+    const navAdmin = document.getElementById('nav-admin');
+
+    if (currentUser) {
+      authButtons.style.display = 'none';
+      userProfileNav.style.display = 'block';
+      document.getElementById('nav-avatar').src = currentUser.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.username)}&background=8b0000&color=fff`;
+      document.getElementById('nav-username').textContent = currentUser.username;
+      
+      if (currentUser.role === 'admin') {
+        navAdmin.style.display = 'block';
+      } else {
+        navAdmin.style.display = 'none';
+        if (document.getElementById('page-admin').classList.contains('active')) {
+          navigateTo('public');
+        }
+      }
+    } else {
+      authButtons.style.display = 'block';
+      userProfileNav.style.display = 'none';
+      navAdmin.style.display = 'none';
+      if (document.getElementById('page-admin').classList.contains('active') || document.getElementById('page-profile').classList.contains('active')) {
+        navigateTo('home');
+      }
+    }
+    lucide.createIcons();
+  }
+
+  function login() {
+    const username = document.getElementById('login-username').value.trim();
+    const password = document.getElementById('login-password').value;
+    const users = getUsers();
+    const user = users.find(u => u.username === username && u.password === password);
+
+    if (user) {
+      currentUser = user;
+      localStorage.setItem('othman_current_user', JSON.stringify(currentUser));
+      closeModal('login-modal');
+      updateUIForAuth();
+      document.getElementById('login-error').style.display = 'none';
+      document.getElementById('login-password').value = '';
+      
+      if (currentUser.role === 'admin') {
+         navigateTo('admin');
+      } else {
+         navigateTo('public');
+      }
+    } else {
+      document.getElementById('login-error').style.display = 'block';
+    }
+  }
+
+  function register() {
+    const username = document.getElementById('reg-username').value.trim();
+    const password = document.getElementById('reg-password').value;
+    const adminCode = document.getElementById('reg-admin-code').value.trim();
+    const errorEl = document.getElementById('reg-error');
+
+    // Reset error
+    errorEl.style.display = 'none';
+    errorEl.textContent = '';
+
+    // Validation
+    if (!username || !password) {
+      errorEl.textContent = 'Please fill all required fields (Username and Password).';
+      errorEl.style.display = 'block';
+      return;
+    }
+
+    if (username.length < 3) {
+      errorEl.textContent = 'Username must be at least 3 characters.';
+      errorEl.style.display = 'block';
+      return;
+    }
+
+    if (password.length < 4) {
+      errorEl.textContent = 'Password must be at least 4 characters.';
+      errorEl.style.display = 'block';
+      return;
+    }
+
+    const users = getUsers();
+    
+    // Check if username already exists
+    if (users.find(u => u.username.toLowerCase() === username.toLowerCase())) {
+      errorEl.textContent = 'Username already taken. Please choose another.';
+      errorEl.style.display = 'block';
+      return;
+    }
+
+    let role = 'user';
+    if (adminCode === MASTER_ADMIN_CODE) {
+      role = 'admin';
+    }
+
+    const newUser = {
+      id: Date.now().toString(),
+      username: username,
+      password: password,
+      role: role,
+      avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(username)}&background=8b0000&color=fff`
+    };
+
+    users.push(newUser);
+    saveUsers(users);
+
+    // Auto login
+    currentUser = newUser;
+    localStorage.setItem('othman_current_user', JSON.stringify(currentUser));
+    
+    // Close modal and clear form
+    closeModal('register-modal');
+    document.getElementById('reg-username').value = '';
+    document.getElementById('reg-password').value = '';
+    document.getElementById('reg-admin-code').value = '';
+    
+    updateUIForAuth();
+    navigateTo('public');
+  }
+
+  function logout() {
+    currentUser = null;
+    localStorage.removeItem('othman_current_user');
+    updateUIForAuth();
+    navigateTo('home');
+  }
+
+  // Profile Updates
+  function updateAvatar() {
+    const newUrl = document.getElementById('new-avatar-url').value.trim();
+    if (!newUrl) return;
+
+    const users = getUsers();
+    const index = users.findIndex(u => u.id === currentUser.id);
+    if (index !== -1) {
+      users[index].avatar = newUrl;
+      saveUsers(users);
+      currentUser = users[index];
+      localStorage.setItem('othman_current_user', JSON.stringify(currentUser));
+      updateUIForAuth();
+      renderProfilePage();
+      alert('Avatar updated!');
+      document.getElementById('new-avatar-url').value = '';
+    }
+  }
+
+  function updatePassword() {
+    const newPass = document.getElementById('new-password').value;
+    if (!newPass) return;
+    if (newPass.length < 4) {
+      alert('Password must be at least 4 characters.');
+      return;
+    }
+
+    const users = getUsers();
+    const index = users.findIndex(u => u.id === currentUser.id);
+    if (index !== -1) {
+      users[index].password = newPass;
+      saveUsers(users);
+      currentUser = users[index];
+      localStorage.setItem('othman_current_user', JSON.stringify(currentUser));
+      alert('Password updated!');
+      document.getElementById('new-password').value = '';
+    }
+  }
+
+  // ==========================================
+  // 3. RENDER FUNCTIONS
+  // ==========================================
+
+  // --- PUBLIC VIEW ---
+  function renderPublic() {
+    const grid = document.getElementById('public-grid');
+    const posts = getPosts();
+    
+    if (posts.length === 0) {
+      grid.innerHTML = `<div class="empty-state">> No devlogs found. Check back later.</div>`;
+      return;
+    }
+
+    grid.innerHTML = posts.map(post => {
+      let icon = 'folder';
+      if (post.status === 'COMPLETED') icon = 'check-circle';
+      if (post.status === 'PLANNING') icon = 'lightbulb';
+      if (post.status === 'IN_DEV') icon = 'code';
+
+      let coverHTML = `<i data-lucide="${icon}" style="width: 64px; height: 64px;"></i>`;
+      if (post.image && post.image.trim() !== '') {
+        coverHTML = `<img src="${post.image}" alt="${post.title}" onerror="this.style.display='none'">`;
+      }
+
+      const tagsHTML = post.tags.split(',').map(tag => `<span>${tag.trim()}</span>`).join('');
+      const statusColor = post.status === 'COMPLETED' ? '#00ff41' : (post.status === 'IN_DEV' ? '#ff3333' : '#eab308');
+      
+      // Check if current user has reacted
+      const userReactions = currentUser ? JSON.parse(localStorage.getItem(`reactions_${currentUser.id}`) || '{}') : {};
+      const hasHeart = userReactions[post.id] === 'heart';
+      const hasFire = userReactions[post.id] === 'fire';
+      const hasDislike = userReactions[post.id] === 'dislike';
+
+      return `
+        <div class="game-card">
+          <div class="game-cover">${coverHTML}</div>
+          <div class="game-info">
+            <div class="post-author">
+              <img src="${post.authorAvatar || 'https://ui-avatars.com/api/?name=U&background=8b0000&color=fff'}" alt="Author">
+              <span>${post.author || 'Admin'}</span>
+            </div>
+            <h3>${post.title}</h3>
+            <div class="game-tags">${tagsHTML}</div>
+            <p class="game-desc">${post.desc}</p>
+            
+            <!-- Reactions -->
+            <div class="reactions">
+              <button class="reaction-btn ${hasHeart ? 'active' : ''}" onclick="react('${post.id}', 'heart')">
+                <i data-lucide="heart"></i> ${post.reactions?.hearts || 0}
+              </button>
+              <button class="reaction-btn ${hasFire ? 'active' : ''}" onclick="react('${post.id}', 'fire')">
+                <i data-lucide="flame"></i> ${post.reactions?.fires || 0}
+              </button>
+              <button class="reaction-btn ${hasDislike ? 'active' : ''}" onclick="react('${post.id}', 'dislike')">
+                <i data-lucide="thumbs-down"></i> ${post.reactions?.dislikes || 0}
+              </button>
+            </div>
+            
+            <div style="margin-top: 1rem; border-top: 1px solid #222; padding-top: 1rem;">
+              <span style="font-family: 'Courier Prime', monospace; font-size: 0.8rem; color: ${statusColor};">
+                STATUS: ${post.status}
+              </span>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    lucide.createIcons();
+  }
+
+  // Reaction Logic
+  function react(postId, type) {
+    if (!currentUser) {
+      openLogin();
+      return;
+    }
+
+    let posts = getPosts();
+    const postIndex = posts.findIndex(p => p.id === postId);
+    if (postIndex === -1) return;
+
+    if (!posts[postIndex].reactions) {
+      posts[postIndex].reactions = { hearts: 0, fires: 0, dislikes: 0 };
+    }
+
+    let userReactions = JSON.parse(localStorage.getItem(`reactions_${currentUser.id}`) || '{}');
+    const previousReaction = userReactions[postId];
+
+    // Remove previous reaction if exists
+    if (previousReaction) {
+      if (previousReaction === 'heart') posts[postIndex].reactions.hearts--;
+      if (previousReaction === 'fire') posts[postIndex].reactions.fires--;
+      if (previousReaction === 'dislike') posts[postIndex].reactions.dislikes--;
+    }
+
+    // If clicking the same reaction, remove it (toggle off)
+    if (previousReaction === type) {
+      delete userReactions[postId];
+    } else {
+      // Add new reaction
+      if (type === 'heart') posts[postIndex].reactions.hearts++;
+      if (type === 'fire') posts[postIndex].reactions.fires++;
+      if (type === 'dislike') posts[postIndex].reactions.dislikes++;
+      userReactions[postId] = type;
+    }
+
+    localStorage.setItem(`reactions_${currentUser.id}`, JSON.stringify(userReactions));
+    savePosts(posts);
+    renderPublic();
+  }
+
+  // --- PROFILE VIEW ---
+  function renderProfilePage() {
+    if (!currentUser) return;
+    document.getElementById('profile-avatar-display').src = currentUser.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.username)}&background=8b0000&color=fff`;
+    document.getElementById('profile-username-display').textContent = currentUser.username;
+    document.getElementById('profile-role-display').textContent = `Role: ${currentUser.role === 'admin' ? 'Administrator' : 'User'}`;
+  }
+
+  // --- ADMIN VIEW ---
+  function renderAdmin() {
+    if (!currentUser || currentUser.role !== 'admin') return;
+    
+    const grid = document.getElementById('admin-grid');
+    const posts = getPosts();
+
+    if (posts.length === 0) {
+      grid.innerHTML = `<div class="empty-state">> No posts yet. Click "New Post" to add one.</div>`;
+    } else {
+      grid.innerHTML = posts.map(post => {
+        return `
+          <div class="game-card" style="border-color: #333;">
+            <div class="game-info">
+              <h3 style="color: #fff;">${post.title}</h3>
+              <div class="game-tags">${post.tags.split(',').map(t => `<span>${t.trim()}</span>`).join('')}</div>
+              <p class="game-desc">${post.desc.substring(0, 80)}...</p>
+              <div class="card-actions">
+                <button class="btn-small btn-outline" onclick="editPost('${post.id}')">
+                  <i data-lucide="edit-2" style="width: 14px;"></i> Edit
+                </button>
+                <button class="btn-small btn-danger" onclick="deletePost('${post.id}')">
+                  <i data-lucide="trash-2" style="width: 14px;"></i> Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Render User Management
+    renderUserManagement();
+
+    lucide.createIcons();
+  }
+
+  function renderUserManagement() {
+    const listContainer = document.getElementById('user-management-list');
+    const users = getUsers();
+    
+    if (users.length === 0) {
+      listContainer.innerHTML = '<p style="color: #666; font-family: Courier Prime;">No registered users yet.</p>';
+      return;
+    }
+
+    listContainer.innerHTML = users.map(user => `
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem; border-bottom: 1px solid #222;">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <img src="${user.avatar}" style="width: 30px; height: 30px; border-radius: 50%;" onerror="this.src='https://ui-avatars.com/api/?name=U&background=333&color=fff'">
+          <div>
+            <div style="color: #fff; font-weight: 600;">${user.username}</div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 1rem; align-items: center;">
+          <span style="font-family: 'Courier Prime'; font-size: 0.8rem; color: ${user.role === 'admin' ? '#00ff41' : '#888'}">
+            ${user.role.toUpperCase()}
+          </span>
+          ${user.role === 'user' ? `<button class="btn-small btn-outline" onclick="promoteToAdmin('${user.id}')" style="border-color:#00ff41; color:#00ff41;">Make Admin</button>` : ''}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function promoteToAdmin(userId) {
+    if (!currentUser || currentUser.role !== 'admin') return;
+    const users = getUsers();
+    const index = users.findIndex(u => u.id === userId);
+    if (index !== -1) {
+      users[index].role = 'admin';
+      saveUsers(users);
+      renderUserManagement();
+      alert('User promoted to Admin!');
+    }
+  }
+
+  // ==========================================
+  // 4. ADD / EDIT / DELETE POSTS
+  // ==========================================
+  const form = document.getElementById('post-form');
+  const formContainer = document.getElementById('form-container');
+  const formTitle = document.getElementById('form-title');
+
+  function showForm() {
+    formContainer.style.display = 'block';
+    window.scrollTo({ top: 300, behavior: 'smooth' });
+  }
+
+  function hideForm() {
+    formContainer.style.display = 'none';
+    form.reset();
+    document.getElementById('post-id').value = '';
+    formTitle.textContent = 'Create New Devlog';
+  }
+
+  function resetForm() {
+    form.reset();
+    document.getElementById('post-id').value = '';
+    formTitle.textContent = 'Create New Devlog';
+    showForm();
+  }
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (!currentUser || currentUser.role !== 'admin') return;
+    
+    const id = document.getElementById('post-id').value;
+    const title = document.getElementById('post-title').value.trim();
+    const tags = document.getElementById('post-tags').value.trim();
+    const status = document.getElementById('post-status').value;
+    const image = document.getElementById('post-image').value.trim();
+    const desc = document.getElementById('post-desc').value.trim();
+
+    if(!title || !tags || !desc) {
+      alert("Please fill all required fields.");
+      return;
+    }
+
+    let posts = getPosts();
+
+    if (id) {
+      // Edit existing
+      posts = posts.map(p => p.id === id ? { ...p, title, tags, status, image, desc } : p);
+    } else {
+      // Create new
+      const newPost = { 
+        id: Date.now().toString(), 
+        title, tags, status, image, desc,
+        author: currentUser.username,
+        authorAvatar: currentUser.avatar,
+        reactions: { hearts: 0, fires: 0, dislikes: 0 }
+      };
+      posts.unshift(newPost);
+    }
+
+    savePosts(posts);
+    hideForm();
+    renderAdmin();
+    renderPublic();
+    alert('Post saved successfully!');
+  });
+
+  function editPost(id) {
+    const posts = getPosts();
+    const post = posts.find(p => p.id === id);
+    if (!post) return;
+
+    document.getElementById('post-id').value = post.id;
+    document.getElementById('post-title').value = post.title;
+    document.getElementById('post-tags').value = post.tags;
+    document.getElementById('post-status').value = post.status;
+    document.getElementById('post-image').value = post.image;
+    document.getElementById('post-desc').value = post.desc;
+
+    formTitle.textContent = 'Edit Devlog';
+    showForm();
+  }
+
+  function deletePost(id) {
+    if (!confirm('Are you sure you want to delete this devlog?')) return;
+    
+    let posts = getPosts();
+    posts = posts.filter(p => p.id !== id);
+    savePosts(posts);
+    renderAdmin();
+    renderPublic();
+  }
+
+  // ==========================================
+  // 5. NAVIGATION & MODALS
+  // ==========================================
+  function navigateTo(pageId) {
+    // Security check for admin page
+    if (pageId === 'admin' && (!currentUser || currentUser.role !== 'admin')) {
+      openLogin();
+      return;
+    }
+    if (pageId === 'profile' && !currentUser) {
+      openLogin();
+      return;
+    }
+
+    document.querySelectorAll('.page-view').forEach(el => el.classList.remove('active'));
+    
+    const target = document.getElementById('page-' + pageId);
+    if (target) target.classList.add('active');
+
+    document.querySelectorAll('.nav-links a').forEach(el => el.classList.remove('active'));
+    const navLink = document.getElementById('nav-' + pageId);
+    if (navLink) navLink.classList.add('active');
+
+    if (pageId === 'public') renderPublic();
+    if (pageId === 'admin') renderAdmin();
+    if (pageId === 'profile') renderProfilePage();
+
+    window.scrollTo(0, 0);
+    window.location.hash = pageId;
+  }
+
+  function openLogin() { document.getElementById('login-modal').classList.add('active'); }
+  function openRegister() { document.getElementById('register-modal').classList.add('active'); }
+  function openContact() { document.getElementById('contact-modal').classList.add('active'); }
+  
+  function closeModal(modalId) {
+    document.getElementById(modalId).classList.remove('active');
+    if (modalId === 'login-modal') document.getElementById('login-error').style.display = 'none';
+    if (modalId === 'register-modal') document.getElementById('reg-error').style.display = 'none';
+    if (modalId === 'contact-modal') document.getElementById('contact-success').style.display = 'none';
+  }
+
+  function sendContact() {
+    document.getElementById('contact-success').style.display = 'block';
+    setTimeout(() => { closeModal('contact-modal'); }, 2000);
+  }
+
+  // ==========================================
+  // 6. INITIALIZATION & LANGUAGE
+  // ==========================================
+  
+  window.addEventListener('load', () => {
+    updateUIForAuth();
+    
+    const hash = window.location.hash.replace('#', '');
+    if (['home', 'public', 'admin', 'about', 'profile'].includes(hash)) {
+      navigateTo(hash);
+    } else {
+      navigateTo('home');
+    }
+    
+    lucide.createIcons();
+  });
+
+  // Language Support
+  const translations = {
+    en: {
+      heroBadge: 'System Status: Online',
+      heroDesc: '> Initializing personal publishing platform...<br>> Documenting the process of creating original games. Explore the development logs, mechanics, and lore behind the worlds I build.',
+      btnReadLogs: 'Read Devlogs',
+      btnJoin: 'Join Community',
+      publicTitle: 'My Original Works',
+      adminTitle: 'Manage Devlogs',
+      btnNewPost: 'New Post',
+      lblTitle: 'Post Title *',
+      lblTags: 'Tags (comma separated) *',
+      lblStatus: 'Status *',
+      lblImage: 'Image URL (Optional)',
+      lblDesc: 'Description *',
+      btnSave: 'Save Post',
+      btnCancel: 'Cancel',
+      aboutTitle: 'About The Creator',
+      aboutP1: 'I am a solo game developer and the founder of OTHMAN STUDIO. This platform is dedicated to documenting my journey, showcasing my original game concepts, and sharing the technical and artistic processes behind them.',
+      aboutP2: 'No publishers, no marketing fluff. Just raw development logs, assets, and the games I create.',
+      footerText: '© 2025 OTHMAN STUDIO · SYSTEM VER. 3.1.0'
+    },
+    ar: {
+      heroBadge: 'حالة النظام: متصل',
+      heroDesc: '> جاري تهيئة منصة النشر الشخصية...<br>> أوثق هنا عملية صنع ألعابي الأصلية. استكشف سجلات التطوير، الميكانيكيات، والقصة خلف العوالم التي أبنيها.',
+      btnReadLogs: 'اقرأ السجلات',
+      btnJoin: 'انضم للمجتمع',
+      publicTitle: 'أعمالي الأصلية',
+      adminTitle: 'إدارة السجلات',
+      btnNewPost: 'منشور جديد',
+      lblTitle: 'عنوان المنشور *',
+      lblTags: 'التصنيفات (مفصولة بفاصلة) *',
+      lblStatus: 'الحالة *',
+      lblImage: 'رابط الصورة (اختياري)',
+      lblDesc: 'الوصف *',
+      btnSave: 'حفظ المنشور',
+      btnCancel: 'إلغاء',
+      aboutTitle: 'حول المبتكر',
+      aboutP1: 'أنا مطور ألعاب فردي ومؤسس استوديو عثمان. هذه المنصة مخصصة لتوثيق رحلتي، وعرض أفكار ألعابي الأصلية، ومشاركة العمليات التقنية والفنية وراءها.',
+      aboutP2: 'لا ناشرين، لا مبالغة تسويقية. مجرد سجلات تطوير خام، أصول، والألعاب التي أصنعها.',
+      footerText: '© 2025 استوديو عثمان · إصدار النظام 3.1.0'
+    }
+  };
+
+  function setLanguage(lang) {
+    const htmlEl = document.documentElement;
+    htmlEl.setAttribute('lang', lang);
+    htmlEl.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    
+    document.querySelectorAll('.lang-toggle button').forEach(btn => btn.classList.remove('active'));
+    if (lang === 'en') document.getElementById('btn-en').classList.add('active');
+    if (lang === 'ar') document.getElementById('btn-ar').classList.add('active');
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (translations[lang][key]) {
+        el.innerHTML = translations[lang][key];
+      }
+    });
+
+    document.getElementById('nav-public').textContent = lang === 'ar' ? 'السجلات' : 'Devlogs';
+    document.getElementById('nav-about').textContent = lang === 'ar' ? 'حول' : 'About';
+    document.getElementById('nav-contact').textContent = lang === 'ar' ? 'اتصل' : 'Contact';
+  }
+</script>
+</body>
+</html>
