@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>OMNI CODE STUDIO</title><meta name="theme-color" content="#050508">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.css">
+</head><body data-theme="dark">
+<div id="boot"><div class="spin"></div><p>Loading editor…</p></div>
+<div id="app">
+<header>
+ <button class="ib" id="bMenu" title="Files (Ctrl+B)"><i data-i="menu"></i></button>
+ <div class="logo"><b>OMNI</b> CODE STUDIO</div><span class="sp"></span>
+ <button class="btn run" id="bRun" title="Run (Ctrl+Enter)"><i data-i="play"></i><span>Run</span></button>
+ <button class="ib" id="bPrev" title="Preview"><i data-i="eye"></i></button>
+ <button class="ib" id="bTerm" title="Terminal (Ctrl+`)"><i data-i="term"></i></button>
+ <button class="ib" id="bSet" title="Settings"><i data-i="gear"></i></button>
+</header>
+<div id="main">
+ <aside id="side">
+  <div class="tb"><span>EXPLORER</span><span class="sp"></span>
+   <button class="ib" data-a="nf" title="New file"><i data-i="file"></i></button>
+   <button class="ib" data-a="nd" title="New folder"><i data-i="folderplus"></i></button>
+   <button class="ib" data-a="ren" title="Rename selected"><i data-i="edit"></i></button>
+   <button class="ib" data-a="del" title="Delete selected"><i data-i="trash"></i></button>
+   <button class="ib" data-a="up" title="Upload text files"><i data-i="up"></i></button>
+   <button class="ib" data-a="zipin" title="Import ZIP"><i data-i="zipup"></i></button>
+   <button class="ib" data-a="zipout" title="Export ZIP"><i data-i="down"></i></button>
+  </div><div id="tree"></div></aside>
+ <section id="center">
+  <div id="tabs"></div>
+  <div id="ed"><div id="welcome"></div></div>
+  <div id="bottom"><div class="tb"><button class="tab on" data-b="term">TERMINAL</button><button class="tab" data-b="cons">CONSOLE</button><span class="sp"></span><button class="ib" id="bClr" title="Clear console"><i data-i="trash"></i></button><button class="ib" id="bHide"><i data-i="x"></i></button></div>
+   <div id="term"></div><div id="cons" hidden></div></div>
+ </section>
+ <section id="prev" hidden>
+  <div class="tb"><span>PREVIEW</span><span class="sp"></span>
+   <button class="ib" data-v="100%" title="Desktop"><i data-i="monitor"></i></button><button class="ib" data-v="768px" title="Tablet"><i data-i="tablet"></i></button><button class="ib" data-v="375px" title="Phone"><i data-i="phone"></i></button>
+   <button class="ib" id="pRef" title="Refresh"><i data-i="refresh"></i></button><button class="ib" id="pFull" title="Fullscreen"><i data-i="full"></i></button><button class="ib" id="pX"><i data-i="x"></i></button></div>
+  <div id="pw"><iframe id="frame" sandbox="allow-scripts allow-modals allow-forms" title="Preview"></iframe></div></section>
+</div>
+<footer><span id="st">Ready</span><span class="sp"></span><span id="lang"></span></footer>
+</div>
+<dialog id="set"><h3>Settings</h3>
+ <label>Theme <select id="sTheme"><option value="dark">Dark</option><option value="light">Light</option><option value="midnight">Midnight</option></select></label>
+ <label>Font size <input id="sFont" type="number" min="10" max="28"></label>
+ <label>Word wrap <input id="sWrap" type="checkbox"></label>
+ <label>Language (current file) <select id="sLang"></select></label>
+ <h4>Shortcuts</h4><p class="m">Ctrl+Enter run · Ctrl+S save · Ctrl+B sidebar · Ctrl+` terminal · Ctrl+F find · Ctrl+H replace · Ctrl+/ comment</p>
+ <h4>Limits</h4><p class="m">Everything runs in your browser. JS runs in a Web Worker (10 s limit, no DOM). Python is Pyodide (WebAssembly; first run downloads ~10 MB). The terminal is NOT a Linux shell. Uploads are text-only and never auto-executed. Data stays in this browser's IndexedDB.</p>
+ <button class="btn" id="sOk">Close</button></dialog>
+<input type="file" id="fUp" multiple hidden><input type="file" id="fZip" accept=".zip" hidden>
+<div id="toasts"></div>
+<script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.8.0/lib/xterm-addon-fit.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
+<script type="module" src="js/app.js"></script>
+</body></html>

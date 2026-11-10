@@ -1,0 +1,1 @@
+{"name":"omni-code-studio","version":"1.0.0","private":true,"description":"Browser IDE: Monaco, xterm.js, Pyodide, IndexedDB. No build step.","scripts":{"start":"npx serve .","dev":"npx serve ."}}
